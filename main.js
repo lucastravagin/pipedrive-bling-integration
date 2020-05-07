@@ -2,12 +2,13 @@
 
 const _server = require('./server/server')
 const server = new _server.Server()
-//const pipedriveRouter = require('./api/pipedrive/pipedrive.router')
+const pipedriveRouter = require('./api/pipedrive/pipedrive.router')
 
 const blingRouter = require('./api/bling/bling.router')
 
 server.bootstrap([
-  blingRouter.blingRouter
+  blingRouter.blingRouter,
+  pipedriveRouter,
 ]).then(server => {
     console.log('Server listening in port:', server.application.address())
 }).catch(error => {
