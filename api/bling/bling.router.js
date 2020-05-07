@@ -12,7 +12,6 @@ class BlingRouter extends modelRouter.ModelRouter {
      * /orderblings
      */
     applyRoutes(application) {
-        console.log(this.basePath)
         application.get(`${this.basePath}`, [this.findAll])
         application.get(`${this.basePath}/:id`, [this.validateId, this.findById])
     }
