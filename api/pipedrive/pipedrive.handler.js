@@ -85,8 +85,8 @@ exports.getOpportunitiesWon = async (req, res, next) => {
                     .catch((error) => {
                         console.log(error)
                     })
-                
-               blingModel.OrderBling.create(Opportunities[i])
+
+                blingModel.OrderBling.create(Opportunities[i])
             }
         }
 
