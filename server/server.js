@@ -9,7 +9,7 @@ const corsMiddleware = require('restify-cors-middleware')
 
 class Server {
 
-    initializeDB() {
+    initializeDb() {
         mongoose.Promise = global.Promise
         mongoose.set('useCreateIndex', true)
         return mongoose.connect(environment.environment.db.url, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -86,6 +86,22 @@ class Server {
             }
         })
     }
+
+/**
+     * 
+     *  {Method responsible for handling the initialization of the database and requests}  
+     */
+    bootstrap(routers = []) {
+        return this.initializeDb().then(() => this.initRoutes(routers).then(() => this))
+    }
+
+    /**
+     * Method responsible for handling the shutdown of the database and application
+     */
+    shutdown() {
+        return mongoose.disconnect().then(() => this.application.close())
+    }
+
 }
 
 exports.Server = Server
