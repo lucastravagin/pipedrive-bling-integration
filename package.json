@@ -17,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/lucastravagin/pipedrive-bling-integration/issues"
   },
-  "homepage": "https://github.com/lucastravagin/pipedrive-bling-integration#readme"
+  "homepage": "https://github.com/lucastravagin/pipedrive-bling-integration#readme",
+  "devDependencies": {
+    "standard": "^14.3.3"
+  }
 }
