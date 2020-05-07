@@ -73,12 +73,8 @@ exports.getOpportunitiesWon = async (req, res, next) => {
                 <obs>Testando o campo observações do pedido</obs>
                 <obs_internas>Testando o campo observações internas do pedido</obs_internas>
             </pedido>`
-                const config = {
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                };
-                axios.post(`${environment.environment.urlBling}=${encodeURI(xmlOrder)}`, config)
+            
+                axios.post(`${environment.environment.urlBling}=${encodeURI(xmlOrder)}`)
                     .then((res) => {
                         console.log(res.data)
                     })
