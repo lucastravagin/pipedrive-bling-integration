@@ -86,7 +86,7 @@ exports.getOpportunitiesWon = async (req, res, next) => {
                         console.log(error)
                     })
                 //const element = Opportunities[i];
-                blingModel.OrderBling.create(Opportunities[i])
+               // blingModel.OrderBling.create(Opportunities[i])
             }
         }
 
