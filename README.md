@@ -5,6 +5,10 @@
   <img src="flow.PNG">
 </p>
 
+### Trello: Para entender mais sobre o processo de desenvolvimento e acompanhar possíveis alterações, vite o link abaixo
+
+* **Link** :  <a href="https://trello.com/b/H381ZC8f/teste-link-api" target="_blank">Clique Aqui</a>
+
 ### Tecnologias, Bibliotecas e Frameworks utilizadas(os)
 
 * * **Nodejs** : Versão utilizada 12.6.4.
@@ -75,11 +79,99 @@ GET: localhost:4003/orderblings
 GET: localhost:4003/orderbling/:id
 
 ```
-## API Design
+### API Design
 
 * A API foi desenvolvida utilizando o padrão Restful, com o auxílio do Framework Restify.
 * Habilitação do CORS na API
 * Mapeamento das Schemas dos Documentos com o Mongoose
 * Tratamento de erros com o Restify
 
+### Referências
+
+* **Link da documentação específica dos pedidos da Bling** : <a href="https://manuais.bling.com.br/manual/?item=pedidos" target="_blank">Bling</a>
+* **Link da documentação do Pipedrive** : <a href="https://manuais.bling.com.br/manual/?item=pedidos" target="_blank">Pipedrive</a>
+
+### Code Review
+
+* **Arquivo Main** : Script responsável por manipular o método bootstrap da Classe Server e orientar a manipulação de erros
+ser houver falha. 
+  O método bootstrap criado na Classe Server, recebe um array de Routers possibilitando a extensão da API
+para outros recursos.
+
+**main.js**
+```
+server.bootstrap([
+  blingRouter.blingRouter,
+  pipedriveRouter.pipedriveRouter,
+]).then(server => {
+    console.log('Server listening in port:', server.application.address())
+}).catch(error => {
+    console.log('Failed in initialize server')
+    console.error(error)
+    process.exit(1) //Uncaught Fatal Exception
+})
+```
+
+* **Router** : Script que realiza o render das requisições, criando uma responsabilidade única, tornando o request e response
+das requisições em um só padrão.
+
+**common/router.js**
+```
+    envolope(document) {
+        return document;
+    }
+
+    envelopeAll(documents, options = {}) {
+        return documents
+    }
+ 
+    
+    render(response, next) {
+        return (document) => {
+            if (document) {
+                this.emit('beforeRender', document);
+                response.json(this.envolope(document))
+            }
+            else {
+                throw new restify_errors.NotFoundError('Document Not Found')
+            }
+            return next(false)
+        }
+    }
+
+    renderAll(response, next, options = {}) {
+        return (documents) => {
+            if(documents) {
+                documents.forEach((document, index, array) => {
+                    this.emit('beforeRender', document)
+                    array[index] = this.envolope(document)
+                })
+                response.json(this.envelopeAll(documents, options))
+            }else{
+                response.json(this.envelopeAll([]))
+            }
+            return next(false)
+        }
+    }
+}
+
+```
+
+* **Model Router** :  A ideia do ModelRouer é enxugar um pouco a complexidade do Router e tirar um pouco da responsabilidade de lidar
+     com os métodos que gerenciam requisições e respostas
+
+**common/model.router.js**
+```
+ this.findAll = (req, resp, next) => {
+            this.model.find()
+                .then(this.render(resp, next))
+                .catch(next)
+        }
+
+        this.findById = (req, resp, next) => {
+            this.model.findById(req.params.id)
+                .then(this.render(resp, next))
+                .catch(next)
+        }
+```
 
