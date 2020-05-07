@@ -9,6 +9,10 @@
 
 * **Link** :  <a href="https://trello.com/b/H381ZC8f/teste-link-api" target="_blank">Clique Aqui</a>
 
+<p align="center">
+  <img src="trello.PNG">
+</p>
+
 ### Tecnologias, Bibliotecas e Frameworks utilizadas(os)
 
 * * **Nodejs** : Versão utilizada 12.6.4.
@@ -40,8 +44,7 @@ npm install
 npm start
 
 ```
-### Abra o navagador de sua prefertência e faça um get para ver se deu tudo certo. Caso de tudo certo, deverá
-retornar as informações do seu browser. Exemplo:
+### Abra o navagador de sua prefertência e digite a uri abaixo. Caso de tudo certo, deverá retornar as informações do seu browser. Exemplo:
 
 ```
 {
